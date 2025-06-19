@@ -4,6 +4,7 @@ import com.saugat.quizapp.model.Question;
 import com.saugat.quizapp.model.Quiz;
 import com.saugat.quizapp.repo.QuestionRepo;
 import com.saugat.quizapp.repo.QuizRepo;
+import com.saugat.quizapp.wrapper.QuestionWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizService {
@@ -40,5 +42,29 @@ public class QuizService {
             e.printStackTrace();
         }
         return new ResponseEntity<>(new Quiz(), HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<List<QuestionWrapper>> getQuizById(int quizId) {
+        try {
+            Optional<Quiz> quiz = repo.findById(quizId);
+            List<QuestionWrapper> questionForUser = new ArrayList<>();
+            for (Question q : quiz.get().getQuestionList()) {
+                QuestionWrapper qw = new QuestionWrapper();
+                qw.setId(q.getId());
+                qw.setCategory(q.getCategory());
+                qw.setDifficultLevel(q.getDifficultLevel());
+                qw.setOption1(q.getOption1());
+                qw.setOption2(q.getOption2());
+                qw.setOption3(q.getOption3());
+                qw.setOption4(q.getOption4());
+                qw.setQuestion(q.getQuestion());
+
+                questionForUser.add(qw);
+            }
+            return new ResponseEntity<>(questionForUser, HttpStatus.OK);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
