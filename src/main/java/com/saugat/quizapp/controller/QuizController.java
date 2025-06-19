@@ -3,6 +3,7 @@ package com.saugat.quizapp.controller;
 import com.saugat.quizapp.model.Quiz;
 import com.saugat.quizapp.service.QuizService;
 import com.saugat.quizapp.wrapper.QuestionWrapper;
+import com.saugat.quizapp.wrapper.QuizResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +34,10 @@ public class QuizController {
     @GetMapping("get/{quizId}")
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestionById(@PathVariable("quizId") int quizId){
         return service.getQuizById(quizId);
+    }
+
+    @PostMapping("submit/{quizId}")
+    public ResponseEntity<Integer> getQuizScore(@PathVariable("quizId") int quizId, @RequestBody List<QuizResponse> responses){
+        return service.getQuizScore(quizId, responses);
     }
 }

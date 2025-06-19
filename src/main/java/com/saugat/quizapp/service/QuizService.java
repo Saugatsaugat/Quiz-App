@@ -5,6 +5,7 @@ import com.saugat.quizapp.model.Quiz;
 import com.saugat.quizapp.repo.QuestionRepo;
 import com.saugat.quizapp.repo.QuizRepo;
 import com.saugat.quizapp.wrapper.QuestionWrapper;
+import com.saugat.quizapp.wrapper.QuizResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,5 +67,25 @@ public class QuizService {
             e.printStackTrace();
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Integer> getQuizScore(int quizId, List<QuizResponse> responses) {
+        try{
+            List<Question> questions = repo.findById(quizId).get().getQuestionList();
+            int correct = 0;
+
+            for(QuizResponse qr : responses){
+                for(Question q: questions){
+                    if(qr.getQuestionId()==q.getId() && qr.getResponse().equals(q.getAnswer())){
+                        correct++;
+                    }
+                }
+            }
+            return new ResponseEntity<>(correct, HttpStatus.OK);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }
