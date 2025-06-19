@@ -25,5 +25,21 @@ public class QuestionService {
         return repo.findAll();
     }
 
+    public List<Question> findQuestionsByCategory(String category){
+        return repo.findByCategory(category);
+    }
 
+
+    public Question addorUpdateQuestion(Question question) {
+        return repo.save(question);
+    }
+
+    public String deleteQuestion(int questionId) {
+        repo.deleteById(questionId);
+        return "Deleted";
+    }
+
+    public Question getQuestionById(int questionId) {
+        return repo.findById(questionId).get();
+    }
 }

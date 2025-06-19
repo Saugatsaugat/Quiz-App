@@ -20,11 +20,12 @@ public class Question {
     private String option3;
     private String option4;
     private String answer;
+    private String category;
 
     public Question() {
     }
 
-    public Question(int id, String difficultLevel, String question, String option1, String option2, String option3, String option4, String answer) {
+    public Question(int id, String difficultLevel, String question, String option1, String option2, String option3, String option4, String answer, String category) {
         this.id = id;
         this.difficultLevel = difficultLevel;
         this.question = question;
@@ -33,6 +34,7 @@ public class Question {
         this.option3 = option3;
         this.option4 = option4;
         this.answer = answer;
+        this.category = category;
     }
 
     public int getId() {
@@ -99,16 +101,24 @@ public class Question {
         this.answer = answer;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Question question1 = (Question) o;
-        return id == question1.id && Objects.equals(difficultLevel, question1.difficultLevel) && Objects.equals(question, question1.question) && Objects.equals(option1, question1.option1) && Objects.equals(option2, question1.option2) && Objects.equals(option3, question1.option3) && Objects.equals(option4, question1.option4) && Objects.equals(answer, question1.answer);
+        return id == question1.id && Objects.equals(difficultLevel, question1.difficultLevel) && Objects.equals(question, question1.question) && Objects.equals(option1, question1.option1) && Objects.equals(option2, question1.option2) && Objects.equals(option3, question1.option3) && Objects.equals(option4, question1.option4) && Objects.equals(answer, question1.answer) && Objects.equals(category, question1.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, difficultLevel, question, option1, option2, option3, option4, answer);
+        return Objects.hash(id, difficultLevel, question, option1, option2, option3, option4, answer, category);
     }
 
     @Override
@@ -122,6 +132,7 @@ public class Question {
                 ", option3='" + option3 + '\'' +
                 ", option4='" + option4 + '\'' +
                 ", answer='" + answer + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }
